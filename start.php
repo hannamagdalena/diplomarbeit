@@ -14,13 +14,11 @@ if (isset($_REQUEST['actualDate'])) {
         while ($row = mysqli_fetch_array($printTraining)) {
             $startTime = $row['startTime'];
             $endTime = $row['endTime'];
+            echo $startDate = date("H:i", @$startTime);
+            echo $endDate = date("H:i", @$endTime);
         }
     }
 }
-$startDate = date("H:i",$startTime);
-$endTime = date("H:i",$endTime);
-echo $startDate;
-echo $endTime;
 ?>
 
 <html>
@@ -41,7 +39,7 @@ echo $endTime;
                     <td>
                         <!--<select name="trainings">
                             <option value="" disabled selected hidden>Trainings</option> -->
-                        <input type="date" name="actualDate" value="">
+                        <input type="date" name="actualDate" value="<?php echo date('Y-m-d'); ?>">
                         <input type="submit" name="submit" value="Anzeigen">
                         <!-- </select> -->
                     </td>
