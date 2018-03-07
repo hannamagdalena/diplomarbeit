@@ -32,19 +32,26 @@ if (isset($_REQUEST['submit'])) {
         echo "Person bereits angemeldet!";
     }
 }
+
+if(isset($_REQUEST['cancle'])){
+    header("Location:login.php");
+}
 ?>
 
 <html>
     <head>
+        <link rel="stylesheet" href="css/styleRegister.css" type="text/css" /> 
         <title>Register members</title>
     </head>
-    <body>
+    <body id="background">
         <form action="register_members.php" method="POST">
-            <a href="login.php">Anmelden | </a><a href="register_members.php">Registrieren</a> | <a href="filterTraining.php">Trainingsdaten ansehen</a> |
-            <a href="editUserInfo.php?">Daten bearbeiten</a>
-            <h3>Registrieren für Training</h3>
+            <table class="menuBar">
+                <tr>
+                    <td><h3>Registrieren für Training</h3></td>
+                </tr>
+            </table>  
             <hr>
-            <table>
+            <table class="formular">
                 <tr>
                     <td>Nachname: </td>
                     <td><input type="text" name="lastname" placeholder="Nachname"></td>
@@ -65,6 +72,7 @@ if (isset($_REQUEST['submit'])) {
                 </tr>
                 <tr>
                     <td><input type="submit" name="submit" value="Registrieren"></td>
+                    <td><input type="submit" name="cancle" value="Abbrechen"</td>
                 </tr>
             </table>
         </form>
