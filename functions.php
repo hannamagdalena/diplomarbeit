@@ -6,15 +6,11 @@
 require_once 'db_connect.php';
 
 //add Member
-function addMember($lastname, $firstname, $yob, $pw, $email) {
+function addMember($lastname, $firstname, $yob, $username, $pw, $email) {
     global $link;
-    
-    $sql = "INSERT INTO users(lastname, firstname, yob, username, pw, mail) 
-            VALUES ('$lastname', '$firstname', '$yob', '$firstname.$lastname', '$pw', '$email')";
-    print_r($sql);
-            return mysqli_query($link, $sql);
-    
-    
+
+    $sql = "INSERT into users (lastname,firstname,yob,username, pw, email) VALUES('$lastname','$firstname','$yob','$email','$password')";
+    mysqli_query($link, $sql);
 }
 
 //check Double
@@ -55,7 +51,9 @@ function showAllMembers() {
 function printData($id, $startTime, $endTime) {
     global $link;
 
-    $sql = "SELECT ";
+    $sql = "SELECT t.dateOfTraining, t.startTime, t.endTime, d.heartrate, d.rotation, "
+            . "d.calories, d.watt FROM users u, training t, trainingsdata d WHERE u.u_id=t.user_id  "
+            . "AND t.trainingsdata_id = d.data_id AND t.user_id = $id AND t.dateOfTraining >= \"$startTime\" AND t.dateOfTraining <= \"$endTime\"";
 
     $result = mysqli_query($link, $sql);
     
@@ -140,49 +138,19 @@ function showMaxHF($id,$startTime,$endTime){
 }
 
 //get username from db --> doLogin.php
-function checkUserInfos($username, $password){
+function getUsernameDB($username);{
     global $link;
     
-    $sql = "SELECT username FROM users WHERE username = '$username' AND pw = '$password'";
-    $result = mysqli_query($link, $sql);
-    $rows = mysqli_num_rows($result);
-    
-    return $rows;
-   
-}
-
-//test if login is correct --> show username
-function getUser($username, $pw){
-    global $link;
-    
-    $sql= "SELECT id, firstname, lastname from users WHERE username = '$username' AND pw = '$pw'";
-    $result= mysqli_query($link, $sql);
-    $row = mysqli_fetch_array($result);
-    return $row;
-}
-
-
-//get user by ID --> save it in session
-function getUserById($userById){
-    global $link;
-    
-    $sql = "SELECT * FROM users WHERE id = '$userById'";
+    $sql = "SELECT username FROM users WHERE username='$username'";                       /*<------ noch zu bearbeiten!!!!!*/
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_array($result);
+    return $result['username'];
+}
+
+//getEmail from user --> doLogin.php
+function getMail(){
     
-    return $row;
 }
-
-//get trainingsdata by user id
-function getTraining($userId,$actualDate){
-    global $link;
-
-    $sql = "SELECT startTime, endTime FROM training WHERE user_id = '$userId' AND dateOfTraining = '$actualDate'";
-    $result = mysqli_query($link, $sql);
-   
-    return $result;
-}
-
 ?>
 
 

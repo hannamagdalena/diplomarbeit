@@ -10,9 +10,8 @@ require_once 'functions.php';
 $lastname = @$_REQUEST['lastname'];
 $firstname = @$_REQUEST['firstname'];
 $yob = @$_REQUEST['yob'];
-$username = @$_REQUEST['username'];
 $email = @$_REQUEST['setEmail'];
-$pw = @$_REQUEST['setPassword'];
+$password = @$_REQUEST['setPassword'];
 $passwordRep = @$_REQUEST['PasswordRep'];
 
 //info data saved
@@ -22,9 +21,9 @@ $dataSaved = "";
 if (isset($_REQUEST['submit'])) {
     $checkMember = checkDouble($lastname, $firstname);
     if ($checkMember == false) {
-        if ($pw == $passwordRep) {
-            addMember($lastname, $firstname, $yob, $username, $pw, $email);
-            header("Location:login.php");
+        if ($password == $passwordRep) {
+            addMember($lastname, $firstname, $yob, $email, $password);
+            $dataSaved = "Daten gespeichert";
         } else {
             echo "Passwort stimmt nicht überein.";
         }
@@ -58,13 +57,19 @@ if (isset($_REQUEST['submit'])) {
                     <td><input type="password" name="setPassword" placeholder="Passwort eingeben"></td>
                 </tr>
                 <tr>
-                    <td>Geburtstag: </td>
-                    <td><input type="date" name="yob"></td>
+                    <td>Geburtsjahr: </td>
+                    <td><input type="text" name="yob" placeholder="Geburtsjahr"></td>
                     <td>Passwort wiederholen: </td>
                     <td><input type="password" name="PasswordRep" placeholder="Password wiederholen"></td>
                 </tr>
                 <tr>
                     <td><input type="submit" name="submit" value="Registrieren"></td>
+                    <?php if (isset($_REQUEST['submit'])): ?>
+                        <td><?php echo "<input type=submit name=continue value=Weiter> $dataSaved"; ?></td>
+                    <?php endif; ?>
+                    <?php if (isset($_REQUEST['continue'])): ?>
+                        <?php header('Location:filterTraining.php'); ?>
+                    <?php endif; ?>
                 </tr>
             </table>
         </form>
