@@ -23,8 +23,9 @@ if (isset($_REQUEST['submit'])) {
     $checkMember = checkDouble($lastname, $firstname);
     if ($checkMember == false) {
         if ($pw == $passwordRep) {
-            addMember($lastname, $firstname, $yob, $username, $pw, $email);
-            header("Location:login.php");
+            addMember($lastname, $firstname, $yob, $pw, $email);
+            $dataSaved = "Daten gespeichert";
+            header("location: login.php");
         } else {
             echo "Passwort stimmt nicht überein.";
         }
@@ -32,19 +33,26 @@ if (isset($_REQUEST['submit'])) {
         echo "Person bereits angemeldet!";
     }
 }
+
+//Abbrechen --> zurück auf die login Page
+if(isset($_REQUEST['cancle'])){
+    header("Location:login.php");
+}
 ?>
 
 <html>
     <head>
+         <link rel="stylesheet" href="css/style.css" type="text/css" /> 
         <title>Register members</title>
     </head>
-    <body>
+    <body class="background">
         <form action="register_members.php" method="POST">
-            <a href="login.php">Anmelden | </a><a href="register_members.php">Registrieren</a> | <a href="filterTraining.php">Trainingsdaten ansehen</a> |
-            <a href="editUserInfo.php?">Daten bearbeiten</a>
-            <h3>Registrieren für Training</h3>
+            <table class="menu">
+                <tr></tr>
+            </table>  
+            <h3 style="text-align: center;">Registrieren für Training</h3>
             <hr>
-            <table>
+            <table id="registrierung">
                 <tr>
                     <td>Nachname: </td>
                     <td><input type="text" name="lastname" placeholder="Nachname"></td>
@@ -55,6 +63,7 @@ if (isset($_REQUEST['submit'])) {
                     <td>Vorname: </td>
                     <td><input type="text" name="firstname" placeholder="Vorname"></td>
                     <td>Passwort: </td>
+                    
                     <td><input type="password" name="setPassword" placeholder="Passwort eingeben"></td>
                 </tr>
                 <tr>
@@ -64,7 +73,9 @@ if (isset($_REQUEST['submit'])) {
                     <td><input type="password" name="PasswordRep" placeholder="Password wiederholen"></td>
                 </tr>
                 <tr>
+                    
                     <td><input type="submit" name="submit" value="Registrieren"></td>
+                    <td><input type="submit" name="cancle" value="Zurück"></td>
                 </tr>
             </table>
         </form>

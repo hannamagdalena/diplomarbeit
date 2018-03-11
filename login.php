@@ -22,7 +22,7 @@ require_once 'functions.php';
             <table id="login">
                 <tr>
                     <td>Benutzername: </td>
-                    <td><input type="text" name="username" placeholder="Benutzername"></td>
+                    <td><input type="text" name="username" placeholder="vorname.nachname"></td>
                 </tr>
                 <tr>
                     <td>Passwort: </td>
@@ -31,7 +31,6 @@ require_once 'functions.php';
                 <tr>
                     <td></td>
                     <td id="loginButton"><input type="submit" name="login" value="Login"></td>
-
                 </tr>
                 <tr><td></td></tr>
                 <tr> <td></td><td><a href="passwordReset.php">Passwort vergessen?</a></td></tr>

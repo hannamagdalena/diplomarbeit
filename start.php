@@ -9,18 +9,23 @@ $user = getUserById($userId);
 
 if (isset($_REQUEST['actualDate'])) {
     $actualDate = @$_REQUEST['actualDate'];
+    $_SESSION['setDate'] = $actualDate;
     $printTraining = getTraining($userId, $actualDate);
     if ($printTraining != FALSE) {
         while ($row = mysqli_fetch_array($printTraining)) {
             $startTime = $row['startTime'];
             $endTime = $row['endTime'];
+            $_SESSION['startTime'] = $startTime;
+            $_SESSION['endTime'] = $endTime;
+            echo $startDate = date("H:i", @$startTime);
+            echo $endDate = date("H:i", @$endTime);
         }
     }
 }
-$startDate = date("H:i",$startTime);
-$endTime = date("H:i",$endTime);
-echo $startDate;
-echo $endTime;
+
+if (isset($_REQUEST['submit'])) {
+    header("Location:showTrainingUnit.php");
+}
 ?>
 
 <html>
@@ -41,14 +46,14 @@ echo $endTime;
                     <td>
                         <!--<select name="trainings">
                             <option value="" disabled selected hidden>Trainings</option> -->
-                        <input type="date" name="actualDate" value="">
+                        <input type="date" name="actualDate" value="<?php echo date('Y-m-d'); ?>">
                         <input type="submit" name="submit" value="Anzeigen">
                         <!-- </select> -->
                     </td>
                     <td>
                         <select name="statistik">
                             <option value="" disabled selected hidden>Statistik</option>
-                            <option>lala</option>
+                            <option> lala</option>
                         </select>
                     </td>
                     <td>
@@ -68,6 +73,6 @@ echo $endTime;
             <h1 id="willkommen"> Willkommen <?php echo $user['firstname'] . " " . $user['lastname'] ?>!</h1>
         </form>
     </body>
-
 </html>
+
 
